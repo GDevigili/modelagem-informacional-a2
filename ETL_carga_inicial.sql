@@ -42,3 +42,14 @@ FROM DBCFB.dbo.Fornecedor f
 
 -- Endereco -- 
 
+-- INSERT INTO DWCFB.dbo.Endereco
+SELECT 
+	NEWID(), 
+	e.ID_endereco,
+	e.cep,
+	e.logradouro,
+	e.numero,
+	e.bairro,
+	e.uf,
+	e.cidade
+FROM DBCFB.dbo.Endereco e
