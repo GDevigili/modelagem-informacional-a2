@@ -1,7 +1,7 @@
 
 -- CLIENTE --
 
--- INSERT INTO DwCFB.dbo.Cliente
+-- INSERT INTO DWCFB.dbo.Cliente
 SELECT 
     NEWID(), 
     c.ID_cliente, 
@@ -11,7 +11,7 @@ FROM DBCFB.dbo.Cliente c;
 
 -- MEDICAMENTO --
 
--- INSERT INTO DwCFB.dbo.Medicamento
+-- INSERT INTO DWCFB.dbo.Medicamento
 SELECT 
 	NEWID(), 
 	m.ID_medicamento,
@@ -22,7 +22,7 @@ FROM DBCFB.dbo.Medicamento m
 
 -- CATEGORIA --
 
--- INSERT INTO DwCFB.dbo.Categoria
+-- INSERT INTO DWCFB.dbo.Categoria
 SELECT 
 	NEWID(), 
 	cat.ID_categoria,
@@ -32,9 +32,13 @@ FROM DBCFB.dbo.Categoria cat
 
 -- FORNECEDOR --
 
--- INSERT INTO DwCFB.dbo.Fornecedor
+-- INSERT INTO DWCFB.dbo.Fornecedor
 SELECT 
 	NEWID(), 
 	f.ID_fornecedor,
 	f.nome
 FROM DBCFB.dbo.Fornecedor f
+
+
+-- Endereco -- 
+
