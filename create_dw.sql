@@ -4,7 +4,7 @@
 -- tables
 -- Table: Categoria
 CREATE TABLE Categoria (
-    ChaveCategoria int  NOT NULL,
+    ChaveCategoria uniqueidentifier  NOT NULL,
     IDCategoria int  NOT NULL,
     nome varchar(255)  NOT NULL,
     CONSTRAINT Categoria_pk PRIMARY KEY  (ChaveCategoria)
@@ -12,7 +12,7 @@ CREATE TABLE Categoria (
 
 -- Table: Cliente
 CREATE TABLE Cliente (
-    ChaveCliente int  NOT NULL,
+    ChaveCliente uniqueidentifier  NOT NULL,
     ID_cliente int  NOT NULL,
     NomeCliente varchar(255)  NOT NULL,
     CONSTRAINT Cliente_pk PRIMARY KEY  (ChaveCliente)
@@ -20,7 +20,7 @@ CREATE TABLE Cliente (
 
 -- Table: Dia
 CREATE TABLE Dia (
-    ChaveDia int  NOT NULL,
+    ChaveDia uniqueidentifier  NOT NULL,
     IDData int  NOT NULL,
     DataCompleta date  NOT NULL,
     DiaSemana varchar(20)  NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE Dia (
 
 -- Table: Endereco
 CREATE TABLE Endereco (
-    ChaveEndereco int  NOT NULL,
+    ChaveEndereco uniqueidentifier  NOT NULL,
     CEP varchar(8)  NOT NULL,
     logradouro varchar(255)  NOT NULL,
     numero int  NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE Endereco (
 
 -- Table: Fornecedor
 CREATE TABLE Fornecedor (
-    ChaveFornecedor int  NOT NULL,
+    ChaveFornecedor uniqueidentifier  NOT NULL,
     IDFornecedor int  NOT NULL,
     nome varchar(255)  NOT NULL,
     CONSTRAINT Fornecedor_pk PRIMARY KEY  (ChaveFornecedor)
@@ -52,7 +52,7 @@ CREATE TABLE Fornecedor (
 
 -- Table: Medicamento
 CREATE TABLE Medicamento (
-    ChaveMedicamento int  NOT NULL,
+    ChaveMedicamento uniqueidentifier  NOT NULL,
     IDMedicamento int  NOT NULL,
     nome varchar(255)  NOT NULL,
     preco numeric(5,2)  NOT NULL,
@@ -61,12 +61,12 @@ CREATE TABLE Medicamento (
 
 -- Table: Receita
 CREATE TABLE Receita (
-    ChaveCliente int  NOT NULL,
-    ChaveCategoria int  NOT NULL,
-    ChaveDia int  NOT NULL,
-    ChaveFornecedor int  NOT NULL,
-    ChaveEndereco int  NOT NULL,
-    ChaveMedicamento int  NOT NULL,
+    ChaveCliente uniqueidentifier  NOT NULL,
+    ChaveCategoria uniqueidentifier  NOT NULL,
+    ChaveDia uniqueidentifier  NOT NULL,
+    ChaveFornecedor uniqueidentifier  NOT NULL,
+    ChaveEndereco uniqueidentifier  NOT NULL,
+    ChaveMedicamento uniqueidentifier  NOT NULL,
     ID_Pedido int  NOT NULL,
     Valor int  NOT NULL,
     UnidadesVendidas int  NOT NULL,
@@ -85,12 +85,12 @@ CREATE TABLE Receita_detail (
     Valor int  NOT NULL,
     UnidadesVendidas int  NOT NULL,
     Hora int  NOT NULL,
-    Endereco_ChaveEndereco int  NOT NULL,
-    Fornecedor_ChaveFornecedor int  NOT NULL,
-    Dia_ChaveDia int  NOT NULL,
-    Categoria_ChaveCategoria int  NOT NULL,
-    Medicamento_ChaveMedicamento int  NOT NULL,
-    Cliente_ChaveCliente int  NOT NULL,
+    Endereco_ChaveEndereco uniqueidentifier  NOT NULL,
+    Fornecedor_ChaveFornecedor uniqueidentifier  NOT NULL,
+    Dia_ChaveDia uniqueidentifier  NOT NULL,
+    Categoria_ChaveCategoria uniqueidentifier  NOT NULL,
+    Medicamento_ChaveMedicamento uniqueidentifier  NOT NULL,
+    Cliente_ChaveCliente uniqueidentifier  NOT NULL,
     CONSTRAINT Receita_detail_pk PRIMARY KEY  (ID_Pedido)
 );
 
