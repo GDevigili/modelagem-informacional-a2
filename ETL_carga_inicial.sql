@@ -53,3 +53,17 @@ SELECT
 	e.uf,
 	e.cidade
 FROM DBCFB.dbo.Endereco e
+
+
+-- Dia --
+
+-- INSERT INTO DWCFB.dbo.Dia
+SELECT 
+	NEWID(), 
+	-- id dia?
+	p.data,
+	DATENAME(dw, p.data) as 'DiaSemana',
+	DAY(p.data) as 'DiaMes',
+	MONTH(p.data) as 'Mes',
+	YEAR(p.data) as 'Ano'
+FROM DBCFB.dbo.Pedido p
