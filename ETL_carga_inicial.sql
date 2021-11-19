@@ -17,4 +17,12 @@ SELECT
 	m.preco
 FROM DBCFB.dbo.Medicamento m
 
--- Categoria
+-- Categoria --
+
+-- INSERT INTO DwCFB.dbo.Categoria
+SELECT 
+	NEWID(), 
+	cat.ID_categoria,
+	cat.nome
+FROM DBCFB.dbo.Categoria cat
+
