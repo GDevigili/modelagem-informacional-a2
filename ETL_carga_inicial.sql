@@ -67,3 +67,21 @@ SELECT
 	MONTH(p.data) as 'Mes',
 	YEAR(p.data) as 'Ano'
 FROM DBCFB.dbo.Pedido p
+
+
+-- Receita -- 
+SELECT 
+	ped.ID_pedido,
+	SUM(db_med.preco * iem.quantidade) as 'Valor',
+	SUM(iem.quantidade) as 'UnidadesVendidas',
+	dw_f.ChaveFornecedor
+FROM DBCFB.dbo.Pedido ped
+	JOIN DBCFB.dbo.incluido_em iem
+		ON ped.ID_pedido = iem.ID_pedido
+	JOIN DBCFB.dbo.Medicamento db_med
+		ON db_med.ID_medicamento = iem.ID_medicamento
+	JOIN DBCFB.dbo.Fornecedor db_f
+		ON db_f.ID_fornecedor = db_med.ID_fornecedor
+	JOIN DWCFB.dbo.Fornecedor dw_f
+		ON dw_f.IDFornecedor = db_f.ID_fornecedor
+GROUP BY ped.ID_pedido
