@@ -1,6 +1,6 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2021-10-31 00:32:23.025
-
+-- Last modification date: 2021-11-20 21:28:26.408
+use DWCFB;
 -- tables
 -- Table: Categoria
 CREATE TABLE Categoria (
@@ -18,10 +18,14 @@ CREATE TABLE Cliente (
     CONSTRAINT Cliente_pk PRIMARY KEY  (ChaveCliente)
 );
 
+-- Table: Covid
+CREATE TABLE Covid (
+    taxa_casos_covid numeric(7,2)  NOT NULL
+);
+
 -- Table: Dia
 CREATE TABLE Dia (
     ChaveDia uniqueidentifier  NOT NULL,
-    IDData int  NOT NULL,
     DataCompleta date  NOT NULL,
     DiaSemana varchar(20)  NOT NULL,
     DiaMes int  NOT NULL,
@@ -39,6 +43,7 @@ CREATE TABLE Endereco (
     bairro varchar(255)  NOT NULL,
     uf varchar(2)  NOT NULL,
     cidade varchar(255)  NOT NULL,
+    taxa_casos_covid numeric(7,2)  NOT NULL,
     CONSTRAINT Endereco_pk PRIMARY KEY  (ChaveEndereco)
 );
 
@@ -61,98 +66,92 @@ CREATE TABLE Medicamento (
 
 -- Table: Receita
 CREATE TABLE Receita (
-    ChaveCliente uniqueidentifier  NOT NULL,
-    ChaveCategoria uniqueidentifier  NOT NULL,
-    ChaveDia uniqueidentifier  NOT NULL,
+    ChavePedido uniqueidentifier  NOT NULL,
+    Valor numeric(9,2)  NOT NULL,
+    UnidadesVendidas uniqueidentifier  NOT NULL,
     ChaveFornecedor uniqueidentifier  NOT NULL,
     ChaveEndereco uniqueidentifier  NOT NULL,
+    ChaveDia uniqueidentifier  NOT NULL,
+    ChaveCategoria uniqueidentifier  NOT NULL,
     ChaveMedicamento uniqueidentifier  NOT NULL,
-    ID_Pedido int  NOT NULL,
-    Valor int  NOT NULL,
-    UnidadesVendidas int  NOT NULL,
-    Fornecedor_ChaveFornecedor int  NOT NULL,
-    Endereco_ChaveEndereco int  NOT NULL,
-    Dia_ChaveDia int  NOT NULL,
-    Categoria_ChaveCategoria int  NOT NULL,
-    Medicamento_ChaveMedicamento int  NOT NULL,
-    Cliente_ChaveCliente int  NOT NULL,
-    CONSTRAINT Receita_pk PRIMARY KEY  (ID_Pedido,ChaveMedicamento)
+    ChaveCliente uniqueidentifier  NOT NULL,
+    CONSTRAINT Receita_pk PRIMARY KEY  (ChavePedido,ChaveMedicamento)
 );
 
 -- Table: Receita_detail
 CREATE TABLE Receita_detail (
-    ID_Pedido int  NOT NULL,
+    ChavePedido uniqueidentifier  NOT NULL,
     Valor int  NOT NULL,
     UnidadesVendidas int  NOT NULL,
     Hora int  NOT NULL,
-    Endereco_ChaveEndereco uniqueidentifier  NOT NULL,
-    Fornecedor_ChaveFornecedor uniqueidentifier  NOT NULL,
-    Dia_ChaveDia uniqueidentifier  NOT NULL,
-    Categoria_ChaveCategoria uniqueidentifier  NOT NULL,
-    Medicamento_ChaveMedicamento uniqueidentifier  NOT NULL,
-    Cliente_ChaveCliente uniqueidentifier  NOT NULL,
-    CONSTRAINT Receita_detail_pk PRIMARY KEY  (ID_Pedido)
+    ChaveEndereco uniqueidentifier  NOT NULL,
+    ChaveFornecedor uniqueidentifier  NOT NULL,
+    ChaveDia uniqueidentifier  NOT NULL,
+    ChaveCategoria uniqueidentifier  NOT NULL,
+    ChaveMedicamento uniqueidentifier  NOT NULL,
+    ChaveCliente uniqueidentifier  NOT NULL,
+    CONSTRAINT Receita_detail_pk PRIMARY KEY  (ChavePedido)
 );
 
 -- foreign keys
 -- Reference: Receita_Categoria (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Categoria
-    FOREIGN KEY (Categoria_ChaveCategoria)
+    FOREIGN KEY (ChaveCategoria)
     REFERENCES Categoria (ChaveCategoria);
 
 -- Reference: Receita_Cliente (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Cliente
-    FOREIGN KEY (Cliente_ChaveCliente)
+    FOREIGN KEY (ChaveCliente)
     REFERENCES Cliente (ChaveCliente);
 
 -- Reference: Receita_Dia (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Dia
-    FOREIGN KEY (Dia_ChaveDia)
+    FOREIGN KEY (ChaveDia)
     REFERENCES Dia (ChaveDia);
 
 -- Reference: Receita_Endereco (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Endereco
-    FOREIGN KEY (Endereco_ChaveEndereco)
+    FOREIGN KEY (ChaveEndereco)
     REFERENCES Endereco (ChaveEndereco);
 
 -- Reference: Receita_Fornecedor (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Fornecedor
-    FOREIGN KEY (Fornecedor_ChaveFornecedor)
+    FOREIGN KEY (ChaveFornecedor)
     REFERENCES Fornecedor (ChaveFornecedor);
 
 -- Reference: Receita_Medicamento (table: Receita)
 ALTER TABLE Receita ADD CONSTRAINT Receita_Medicamento
-    FOREIGN KEY (Medicamento_ChaveMedicamento)
+    FOREIGN KEY (ChaveMedicamento)
     REFERENCES Medicamento (ChaveMedicamento);
 
 -- Reference: Receita_detail_Categoria (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Categoria
-    FOREIGN KEY (Categoria_ChaveCategoria)
+    FOREIGN KEY (ChaveCategoria)
     REFERENCES Categoria (ChaveCategoria);
 
 -- Reference: Receita_detail_Cliente (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Cliente
-    FOREIGN KEY (Cliente_ChaveCliente)
+    FOREIGN KEY (ChaveCliente)
     REFERENCES Cliente (ChaveCliente);
 
 -- Reference: Receita_detail_Dia (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Dia
-    FOREIGN KEY (Dia_ChaveDia)
+    FOREIGN KEY (ChaveDia)
     REFERENCES Dia (ChaveDia);
 
 -- Reference: Receita_detail_Endereco (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Endereco
-    FOREIGN KEY (Endereco_ChaveEndereco)
+    FOREIGN KEY (ChaveEndereco)
     REFERENCES Endereco (ChaveEndereco);
 
 -- Reference: Receita_detail_Fornecedor (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Fornecedor
-    FOREIGN KEY (Fornecedor_ChaveFornecedor)
+    FOREIGN KEY (ChaveFornecedor)
     REFERENCES Fornecedor (ChaveFornecedor);
 
 -- Reference: Receita_detail_Medicamento (table: Receita_detail)
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Medicamento
-    FOREIGN KEY (Medicamento_ChaveMedicamento)
+    FOREIGN KEY (ChaveMedicamento)
     REFERENCES Medicamento (ChaveMedicamento);
 
 -- End of file.
