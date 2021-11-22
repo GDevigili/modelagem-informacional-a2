@@ -1,63 +1,84 @@
-
+-------------
 -- CLIENTE --
+-------------
 
--- INSERT INTO DWCFB.dbo.Cliente
+INSERT INTO DWCFB.dbo.Cliente
 SELECT 
     NEWID(), 
     c.ID_cliente, 
-    c.nome
+    c.nome,
+	GETDATE() as data_inicio,
+	NULL as data_fim
 FROM DBCFB.dbo.Cliente c;
 
 
+-----------------
 -- MEDICAMENTO --
+-----------------
 
--- INSERT INTO DWCFB.dbo.Medicamento
+INSERT INTO DWCFB.dbo.Medicamento
 SELECT 
 	NEWID(), 
 	m.ID_medicamento,
 	m.nome,
-	m.preco
+	m.preco,
+	GETDATE() as data_inicio,
+	NULL as data_fim
 FROM DBCFB.dbo.Medicamento m
 
 
+---------------
 -- CATEGORIA --
+---------------
 
--- INSERT INTO DWCFB.dbo.Categoria
+INSERT INTO DWCFB.dbo.Categoria
 SELECT 
 	NEWID(), 
 	cat.ID_categoria,
-	cat.nome
+	cat.nome,
+	GETDATE() as data_inicio,
+	NULL as data_fim
 FROM DBCFB.dbo.Categoria cat
 
 
+----------------
 -- FORNECEDOR --
+----------------
 
--- INSERT INTO DWCFB.dbo.Fornecedor
+INSERT INTO DWCFB.dbo.Fornecedor
 SELECT 
 	NEWID(), 
 	f.ID_fornecedor,
-	f.nome
+	f.nome,
+	GETDATE() as data_inicio,
+	NULL as data_fim
 FROM DBCFB.dbo.Fornecedor f
 
 
--- Endereco -- 
+--------------
+-- Endereco --
+-------------- 
 
--- INSERT INTO DWCFB.dbo.Endereco
+INSERT INTO DWCFB.dbo.Endereco
 SELECT 
 	NEWID(), 
-	e.ID_endereco,
 	e.cep,
 	e.logradouro,
 	e.numero,
 	e.bairro,
 	e.uf,
-	e.cidade
+	e.cidade,
+	NULL,
+	GETDATE(),
+	NULL
 FROM DBCFB.dbo.Endereco e
 
 
+---------
 -- Dia --
+---------
 
--- INSERT INTO DWCFB.dbo.Dia
+INSERT INTO DWCFB.dbo.Dia
 SELECT 
 	NEWID(), 
 	-- id dia?
@@ -69,7 +90,10 @@ SELECT
 FROM DBCFB.dbo.Pedido p
 
 
--- Receita -- 
+-------------
+-- Receita --
+-------------
+
 SELECT 
 	ped.ID_pedido,
 	SUM(db_med.preco * iem.quantidade) as 'Valor',
