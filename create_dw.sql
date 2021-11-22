@@ -1,12 +1,14 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2021-11-20 21:28:26.408
-use DWCFB;
+-- Last modification date: 2021-11-22 16:59:35.342
+
 -- tables
 -- Table: Categoria
 CREATE TABLE Categoria (
     ChaveCategoria uniqueidentifier  NOT NULL,
     IDCategoria int  NOT NULL,
     nome varchar(255)  NOT NULL,
+    data_inicio datetime  NOT NULL,
+    data_fim datetime  NOT NULL,
     CONSTRAINT Categoria_pk PRIMARY KEY  (ChaveCategoria)
 );
 
@@ -15,12 +17,9 @@ CREATE TABLE Cliente (
     ChaveCliente uniqueidentifier  NOT NULL,
     ID_cliente int  NOT NULL,
     NomeCliente varchar(255)  NOT NULL,
+    data_inicio datetime  NOT NULL,
+    data_fim datetime  NOT NULL,
     CONSTRAINT Cliente_pk PRIMARY KEY  (ChaveCliente)
-);
-
--- Table: Covid
-CREATE TABLE Covid (
-    taxa_casos_covid numeric(7,2)  NOT NULL
 );
 
 -- Table: Dia
@@ -44,6 +43,8 @@ CREATE TABLE Endereco (
     uf varchar(2)  NOT NULL,
     cidade varchar(255)  NOT NULL,
     taxa_casos_covid numeric(7,2)  NOT NULL,
+    data_inicio datetime  NOT NULL,
+    data_fim datetime  NOT NULL,
     CONSTRAINT Endereco_pk PRIMARY KEY  (ChaveEndereco)
 );
 
@@ -52,6 +53,8 @@ CREATE TABLE Fornecedor (
     ChaveFornecedor uniqueidentifier  NOT NULL,
     IDFornecedor int  NOT NULL,
     nome varchar(255)  NOT NULL,
+    data_inicio datetime  NOT NULL,
+    data_fim datetime  NOT NULL,
     CONSTRAINT Fornecedor_pk PRIMARY KEY  (ChaveFornecedor)
 );
 
@@ -61,6 +64,8 @@ CREATE TABLE Medicamento (
     IDMedicamento int  NOT NULL,
     nome varchar(255)  NOT NULL,
     preco numeric(5,2)  NOT NULL,
+    data_inicio datetime  NOT NULL,
+    data_fim datetime  NOT NULL,
     CONSTRAINT Medicamento_pk PRIMARY KEY  (ChaveMedicamento)
 );
 
