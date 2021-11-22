@@ -42,7 +42,7 @@ CREATE TABLE Endereco (
     bairro varchar(255)  NOT NULL,
     uf varchar(2)  NOT NULL,
     cidade varchar(255)  NOT NULL,
-    taxa_casos_covid numeric(7,2)  NOT NULL,
+    taxa_casos_covid numeric(7,2),
     data_inicio datetime  NOT NULL,
     data_fim datetime,
     CONSTRAINT Endereco_pk PRIMARY KEY  (ChaveEndereco)
