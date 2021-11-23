@@ -1,7 +1,7 @@
 -------------
 -- CLIENTE --
 -------------
-
+use DWCFB;
 INSERT INTO DWCFB.dbo.Cliente
 SELECT 
     NEWID(), 
@@ -62,6 +62,7 @@ FROM DBCFB.dbo.Fornecedor f
 INSERT INTO DWCFB.dbo.Endereco
 SELECT 
 	NEWID(), 
+	e.ID_Endereco,
 	e.cep,
 	e.logradouro,
 	e.numero,
@@ -70,8 +71,7 @@ SELECT
 	e.cidade,
 	NULL,
 	GETDATE(),
-	NULL,
-	e.ID_Endereco
+	NULL
 FROM DBCFB.dbo.Endereco e
 
 

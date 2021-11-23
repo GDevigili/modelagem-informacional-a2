@@ -160,8 +160,6 @@ ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Medicamento
     FOREIGN KEY (ChaveMedicamento)
     REFERENCES Medicamento (ChaveMedicamento);
 
-ALTER TABLE Endereco
-ADD ID_Endereco INT;
 
 -- End of file.
 
