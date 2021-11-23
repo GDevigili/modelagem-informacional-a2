@@ -5,20 +5,20 @@
 -- Table: Categoria
 CREATE TABLE Categoria (
     ChaveCategoria uniqueidentifier  NOT NULL,
-    IDCategoria int  NOT NULL,
+    ID_Categoria int  NOT NULL,
     nome varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Categoria_pk PRIMARY KEY  (ChaveCategoria)
 );
 
 -- Table: Cliente
 CREATE TABLE Cliente (
     ChaveCliente uniqueidentifier  NOT NULL,
-    ID_cliente int  NOT NULL,
+    ID_Cliente int  NOT NULL,
     NomeCliente varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Cliente_pk PRIMARY KEY  (ChaveCliente)
 );
 
@@ -43,30 +43,30 @@ CREATE TABLE Endereco (
     bairro varchar(255)  NOT NULL,
     uf varchar(2)  NOT NULL,
     cidade varchar(255)  NOT NULL,
-    taxa_casos_covid numeric(7,2)  NOT NULL,
+    taxa_casos_covid numeric(7,2),
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Endereco_pk PRIMARY KEY  (ChaveEndereco)
 );
 
 -- Table: Fornecedor
 CREATE TABLE Fornecedor (
     ChaveFornecedor uniqueidentifier  NOT NULL,
-    IDFornecedor int  NOT NULL,
+    ID_Fornecedor int  NOT NULL,
     nome varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Fornecedor_pk PRIMARY KEY  (ChaveFornecedor)
 );
 
 -- Table: Medicamento
 CREATE TABLE Medicamento (
     ChaveMedicamento uniqueidentifier  NOT NULL,
-    IDMedicamento int  NOT NULL,
+    ID_Medicamento int  NOT NULL,
     nome varchar(255)  NOT NULL,
     preco numeric(5,2)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Medicamento_pk PRIMARY KEY  (ChaveMedicamento)
 );
 
@@ -159,6 +159,9 @@ ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Fornecedor
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Medicamento
     FOREIGN KEY (ChaveMedicamento)
     REFERENCES Medicamento (ChaveMedicamento);
+
+ALTER TABLE Endereco
+ADD ID_Endereco INT;
 
 -- End of file.
 
