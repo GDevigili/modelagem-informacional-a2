@@ -73,7 +73,7 @@ CREATE TABLE Medicamento (
 CREATE TABLE Receita (
     ChavePedido uniqueidentifier  NOT NULL,
     Valor numeric(9,2)  NOT NULL,
-    UnidadesVendidas uniqueidentifier  NOT NULL,
+    UnidadesVendidas INT  NOT NULL,
     ChaveFornecedor uniqueidentifier  NOT NULL,
     ChaveEndereco uniqueidentifier  NOT NULL,
     ChaveDia uniqueidentifier  NOT NULL,
