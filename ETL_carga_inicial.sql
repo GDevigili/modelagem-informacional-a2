@@ -62,7 +62,6 @@ FROM DBCFB.dbo.Fornecedor f
 INSERT INTO DWCFB.dbo.Endereco
 SELECT 
 	NEWID(), 
-	e.ID_Endereco,
 	e.cep,
 	e.logradouro,
 	e.numero,
@@ -71,7 +70,8 @@ SELECT
 	e.cidade,
 	NULL,
 	GETDATE(),
-	NULL
+	NULL,
+	e.ID_Endereco
 FROM DBCFB.dbo.Endereco e
 
 
@@ -82,7 +82,6 @@ FROM DBCFB.dbo.Endereco e
 INSERT INTO DWCFB.dbo.Dia
 SELECT 
 	NEWID(), 
-	-- id dia?
 	p.data,
 	DATENAME(dw, p.data) as 'DiaSemana',
 	DAY(p.data) as 'DiaMes',
@@ -197,5 +196,6 @@ GROUP BY
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
 	dw_c.ChaveCliente
+
 
 
