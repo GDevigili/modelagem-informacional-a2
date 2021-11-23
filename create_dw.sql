@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2021-11-22 16:59:35.342
+-- Last modification date: 2021-11-23 00:09:05.584
 
 -- tables
 -- Table: Categoria
@@ -36,6 +36,7 @@ CREATE TABLE Dia (
 -- Table: Endereco
 CREATE TABLE Endereco (
     ChaveEndereco uniqueidentifier  NOT NULL,
+    ID_Endereco int  NOT NULL,
     CEP varchar(8)  NOT NULL,
     logradouro varchar(255)  NOT NULL,
     numero int  NOT NULL,
