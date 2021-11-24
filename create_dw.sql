@@ -1,5 +1,8 @@
+USE DWCFB;
+
+
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2021-11-23 00:09:05.584
+-- Last modification date: 2021-11-24 01:48:41.21
 
 -- tables
 -- Table: Categoria
@@ -73,6 +76,7 @@ CREATE TABLE Medicamento (
 -- Table: Receita
 CREATE TABLE Receita (
     ChavePedido uniqueidentifier  NOT NULL,
+    ID_Pedido int  NOT NULL,
     Valor numeric(9,2)  NOT NULL,
     UnidadesVendidas INT  NOT NULL,
     ChaveFornecedor uniqueidentifier  NOT NULL,
@@ -81,12 +85,13 @@ CREATE TABLE Receita (
     ChaveCategoria uniqueidentifier  NOT NULL,
     ChaveMedicamento uniqueidentifier  NOT NULL,
     ChaveCliente uniqueidentifier  NOT NULL,
-    CONSTRAINT Receita_pk PRIMARY KEY  (ChavePedido,ChaveMedicamento)
+    CONSTRAINT Receita_pk PRIMARY KEY  (ChavePedido)
 );
 
 -- Table: Receita_detail
 CREATE TABLE Receita_detail (
     ChavePedido uniqueidentifier  NOT NULL,
+    ID_Pedido int  NOT NULL,
     Valor int  NOT NULL,
     UnidadesVendidas int  NOT NULL,
     Hora int  NOT NULL,
@@ -159,7 +164,6 @@ ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Fornecedor
 ALTER TABLE Receita_detail ADD CONSTRAINT Receita_detail_Medicamento
     FOREIGN KEY (ChaveMedicamento)
     REFERENCES Medicamento (ChaveMedicamento);
-
 
 -- End of file.
 
