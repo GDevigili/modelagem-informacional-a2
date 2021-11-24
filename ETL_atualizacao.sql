@@ -50,18 +50,24 @@ declare @E binary(10);
 
 -- CRIA OS STAGINGS
 
-
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_endereco;
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_categoria;
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_cliente;
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_medicamento;
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_fornecedor;
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_incluido_em;
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_pedido;
+
 
 SET @S = sys.fn_cdc_get_min_lsn('dbo_categoria');
 SET @E = sys.fn_cdc_get_max_lsn();
-SELECT * INTO DWCFB.dbo.staging_dbo_categoria FROM [cdc].[fn_cdc_get_net_changes_dbo_categoria]
+SELECT * 
+INTO DWCFB.dbo.staging_dbo_categoria 
+FROM [cdc].[fn_cdc_get_net_changes_dbo_categoria]
 (
 @S, @E, 'all'
 );
 
-
-DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_cliente;
 
 SET @S = sys.fn_cdc_get_min_lsn('dbo_cliente');
 SET @E = sys.fn_cdc_get_max_lsn();
@@ -73,9 +79,6 @@ FROM
 @S, @E, 'all'
 );
 
-
-DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_medicamento;
-
 SET @S = sys.fn_cdc_get_min_lsn('dbo_medicamento');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -85,9 +88,6 @@ FROM
 (
 @S, @E, 'all'
 );
-
-
-DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_fornecedor;
 
 SET @S = sys.fn_cdc_get_min_lsn('dbo_fornecedor');
 SET @E = sys.fn_cdc_get_max_lsn();
@@ -100,21 +100,6 @@ FROM
 );
 
 
-DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_endereco;
-
-SET @S = sys.fn_cdc_get_min_lsn('dbo_endereco');
-SET @E = sys.fn_cdc_get_max_lsn();
-SELECT *
-INTO DWCFB.dbo.staging_dbo_endereco
-FROM
-[cdc].[fn_cdc_get_net_changes_dbo_endereco]
-(
-@S, @E, 'all'
-);
-
-
-DROP TABLE IF EXISTS DWCFB.dbo.incluido_em;
-
 SET @S = sys.fn_cdc_get_min_lsn('dbo_incluido_em');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -124,8 +109,6 @@ FROM
 (
 @S, @E, 'all'
 );
-
-DROP TABLE IF EXISTS DWCFB.dbo.Pedido;
 
 SET @S = sys.fn_cdc_get_min_lsn('dbo_pedido');
 SET @E = sys.fn_cdc_get_max_lsn();
@@ -137,6 +120,16 @@ FROM
 @S, @E, 'all'
 );
 
+
+SET @S = sys.fn_cdc_get_min_lsn('dbo_endereco');
+SET @E = sys.fn_cdc_get_max_lsn();
+SELECT *
+INTO DWCFB.dbo.staging_dbo_endereco
+FROM
+[cdc].[fn_cdc_get_net_changes_dbo_endereco]
+(
+@S, @E, 'all'
+);
 ---------------
 -- CATEGORIA --
 ---------------
@@ -220,7 +213,7 @@ FROM DWCFB.dbo.staging_dbo_endereco e;
 -- Dia --
 ---------
 
-INSERT INTO DWCFB.dbo.Pedido
+INSERT INTO DWCFB.dbo.Dia
 SELECT 
 	NEWID(), 
 	p.data,
@@ -235,53 +228,54 @@ FROM DWCFB.dbo.staging_dbo_pedido p;
 -- Receita --
 -------------
 
--- INSERT INTO DWCFB.dbo.Receita
--- SELECT 
--- 	NEWID(),
--- 	SUM(dw_m.preco * iem.quantidade) as 'Valor',
--- 	SUM(iem.quantidade) as 'UnidadesVendidas',
--- 	dw_f.ChaveFornecedor,
--- 	dw_e.ChaveEndereco,
--- 	dw_d.ChaveDia,
--- 	dw_cat.ChaveCategoria,
--- 	dw_m.ChaveMedicamento,
--- 	dw_c.ChaveCliente
--- FROM DWCFB.dbo.staging_dbo_pedido ped
--- 	-- Incluído em
--- 	JOIN DBCFB.dbo.incluido_em iem
--- 		ON ped.ID_pedido = iem.ID_pedido
--- 	-- Medicamento
--- 	JOIN DBCFB.dbo.Medicamento db_m
--- 		ON db_m.ID_medicamento = iem.ID_medicamento
--- 	JOIN DWCFB.dbo.Medicamento dw_m
--- 		ON dw_m.ID_Medicamento = iem.ID_medicamento
--- 	-- Fornecedor
--- 	JOIN DBCFB.dbo.Fornecedor db_f
--- 		ON db_f.ID_fornecedor = db_m.ID_fornecedor
--- 	JOIN DWCFB.dbo.Fornecedor dw_f
--- 		ON dw_f.ID_Fornecedor = db_f.ID_fornecedor
--- 	-- Cliente
--- 	JOIN DWCFB.dbo.Cliente dw_c
--- 		ON dw_c.ID_Cliente = ped.ID_cliente
--- 	-- Endereco
--- 	JOIN DBCFB.dbo.Endereco db_e
--- 		ON dw_c.ID_Cliente = db_e.ID_cliente
--- 	JOIN DWCFB.dbo.Endereco dw_e
--- 		ON dw_e.CEP = db_e.cep
--- 	-- Dia
--- 	JOIN DWCFB.dbo.Dia dw_d
--- 		ON dw_d.DataCompleta = ped.data
--- 	-- Categoria
--- 	JOIN DWCFB.dbo.Categoria dw_cat
--- 		ON dw_cat.ID_Categoria = db_m.ID_categoria
--- GROUP BY 
--- 	ped.ID_pedido, 
--- 	dw_f.ChaveFornecedor,
--- 	dw_e.ChaveEndereco,
--- 	dw_d.ChaveDia,
--- 	dw_cat.ChaveCategoria,
--- 	dw_m.ChaveMedicamento,
--- 	dw_c.ChaveCliente
+INSERT INTO DWCFB.dbo.Receita
+SELECT 
+	NEWID(),
+	ped.ID_pedido,
+	SUM(dw_m.preco * iem.quantidade) as 'Valor',
+	SUM(iem.quantidade) as 'UnidadesVendidas',
+	dw_f.ChaveFornecedor,
+	dw_e.ChaveEndereco,
+	dw_d.ChaveDia,
+	dw_cat.ChaveCategoria,
+	dw_m.ChaveMedicamento,
+	dw_c.ChaveCliente
+FROM DWCFB.dbo.staging_dbo_pedido ped
+	-- Incluído em
+	JOIN DBCFB.dbo.incluido_em iem
+		ON ped.ID_pedido = iem.ID_pedido
+	-- Medicamento
+	JOIN DBCFB.dbo.Medicamento db_m
+		ON db_m.ID_medicamento = iem.ID_medicamento
+	JOIN DWCFB.dbo.Medicamento dw_m
+		ON dw_m.ID_Medicamento = iem.ID_medicamento
+	-- Fornecedor
+	JOIN DBCFB.dbo.Fornecedor db_f
+		ON db_f.ID_fornecedor = db_m.ID_fornecedor
+	JOIN DWCFB.dbo.Fornecedor dw_f
+		ON dw_f.ID_Fornecedor = db_f.ID_fornecedor
+	-- Cliente
+	JOIN DWCFB.dbo.Cliente dw_c
+		ON dw_c.ID_Cliente = ped.ID_cliente
+	-- Endereco
+	JOIN DBCFB.dbo.Endereco db_e
+		ON dw_c.ID_Cliente = db_e.ID_cliente
+	JOIN DWCFB.dbo.Endereco dw_e
+		ON dw_e.CEP = db_e.cep
+	-- Dia
+	JOIN DWCFB.dbo.Dia dw_d
+		ON dw_d.DataCompleta = ped.data
+	-- Categoria
+	JOIN DWCFB.dbo.Categoria dw_cat
+		ON dw_cat.ID_Categoria = db_m.ID_categoria
+GROUP BY 
+	ped.ID_pedido, 
+	dw_f.ChaveFornecedor,
+	dw_e.ChaveEndereco,
+	dw_d.ChaveDia,
+	dw_cat.ChaveCategoria,
+	dw_m.ChaveMedicamento,
+	dw_c.ChaveCliente
 
 
 
@@ -290,9 +284,10 @@ FROM DWCFB.dbo.staging_dbo_pedido p;
 --------------------
 
 
-INSERT INTO DWCFB.dbo.Receita
+INSERT INTO DWCFB.dbo.Receita_detail
 SELECT 
 	NEWID(),
+    ped.ID_pedido,
 	SUM(dw_m.preco * iem.quantidade) as 'Valor',
 	SUM(iem.quantidade) as 'UnidadesVendidas',
     DATEPART(hour, GETDATE()) as 'Hora',
