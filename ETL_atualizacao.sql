@@ -1,14 +1,58 @@
 USE DBCFB;
 
----------------
--- CATEGORIA --
----------------
+-- Habilita os CDC's
 
 EXEC sys.sp_cdc_enable_table
 @source_schema = N'dbo',
 @source_name = N'categoria',
 @role_name = NULL,
 @supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'cliente',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'medicamento',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'fornecedor',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'endereco',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'dia',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'pedido',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'pedido',
+@role_name = NULL,
+@supports_net_changes = 1;
+
+---------------
+-- CATEGORIA --
+---------------
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_categoria;
 
@@ -36,12 +80,6 @@ FROM DWCFB.dbo.staging_dbo_categoria cat;
 -------------
 -- CLIENTE --
 -------------
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'cliente',
-@role_name = NULL,
-@supports_net_changes = 1;
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_cliente;
 
@@ -71,12 +109,6 @@ FROM DWCFB.dbo.staging_dbo_cliente c;
 -----------------
 -- MEDICAMENTO --
 -----------------
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'medicamento',
-@role_name = NULL,
-@supports_net_changes = 1;
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_medicamento;
 
@@ -108,12 +140,6 @@ FROM DWCFB.dbo.staging_dbo_medicamento m;
 -- FORNECEDOR --
 ----------------
 
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'fornecedor',
-@role_name = NULL,
-@supports_net_changes = 1;
-
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_fornecedor;
 
 declare @S binary(10);
@@ -142,12 +168,6 @@ FROM DWCFB.dbo.staging_dbo_fornecedor f
 --------------
 -- Endereco --
 -------------- 
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'endereco',
-@role_name = NULL,
-@supports_net_changes = 1;
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_endereco;
 
@@ -184,12 +204,6 @@ FROM DWCFB.dbo.staging_dbo_endereco e
 -- Dia --
 ---------
 
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'dia',
-@role_name = NULL,
-@supports_net_changes = 1;
-
 DROP TABLE IF EXISTS DWCFB.dbo.Dia;
 
 declare @S binary(10);
@@ -219,12 +233,6 @@ FROM DWCFB.dbo.staging_dbo_dia p
 -------------
 -- Receita --
 -------------
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'pedido',
-@role_name = NULL,
-@supports_net_changes = 1;
 
 declare @S binary(10);
 declare @E binary(10);
@@ -290,12 +298,6 @@ GROUP BY
 --------------------
 -- Receita_detail --
 --------------------
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
-@source_name = N'pedido',
-@role_name = NULL,
-@supports_net_changes = 1;
 
 declare @S binary(10);
 declare @E binary(10);
