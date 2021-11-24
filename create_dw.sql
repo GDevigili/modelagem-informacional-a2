@@ -15,7 +15,7 @@ CREATE TABLE Categoria (
 -- Table: Cliente
 CREATE TABLE Cliente (
     ChaveCliente uniqueidentifier  NOT NULL,
-    ID_cliente int  NOT NULL,
+    ID_Cliente int  NOT NULL,
     NomeCliente varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
     data_fim datetime  NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE Endereco (
 -- Table: Fornecedor
 CREATE TABLE Fornecedor (
     ChaveFornecedor uniqueidentifier  NOT NULL,
-    IDFornecedor int  NOT NULL,
+    ID_Fornecedor int  NOT NULL,
     nome varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
     data_fim datetime  NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE Fornecedor (
 -- Table: Medicamento
 CREATE TABLE Medicamento (
     ChaveMedicamento uniqueidentifier  NOT NULL,
-    IDMedicamento int  NOT NULL,
+    ID_Medicamento int  NOT NULL,
     nome varchar(255)  NOT NULL,
     preco numeric(5,2)  NOT NULL,
     data_inicio datetime  NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE Medicamento (
 -- Table: Receita
 CREATE TABLE Receita (
     ChavePedido uniqueidentifier  NOT NULL,
-    IDPedido int  NOT NULL,
+    ID_Pedido int  NOT NULL,
     Valor numeric(9,2)  NOT NULL,
     UnidadesVendidas uniqueidentifier  NOT NULL,
     ChaveFornecedor uniqueidentifier  NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE Receita (
 -- Table: Receita_detail
 CREATE TABLE Receita_detail (
     ChavePedido uniqueidentifier  NOT NULL,
-    IDPedido int  NOT NULL,
+    ID_Pedido int  NOT NULL,
     Valor int  NOT NULL,
     UnidadesVendidas int  NOT NULL,
     Hora int  NOT NULL,
