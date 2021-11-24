@@ -8,10 +8,10 @@ USE DWCFB;
 -- Table: Categoria
 CREATE TABLE Categoria (
     ChaveCategoria uniqueidentifier  NOT NULL,
-    IDCategoria int  NOT NULL,
+    ID_Categoria int  NOT NULL,
     nome varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Categoria_pk PRIMARY KEY  (ChaveCategoria)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE Cliente (
     ID_Cliente int  NOT NULL,
     NomeCliente varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Cliente_pk PRIMARY KEY  (ChaveCliente)
 );
 
@@ -46,9 +46,9 @@ CREATE TABLE Endereco (
     bairro varchar(255)  NOT NULL,
     uf varchar(2)  NOT NULL,
     cidade varchar(255)  NOT NULL,
-    taxa_casos_covid numeric(7,2)  NOT NULL,
+    taxa_casos_covid numeric(7,2),
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Endereco_pk PRIMARY KEY  (ChaveEndereco)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE Fornecedor (
     ID_Fornecedor int  NOT NULL,
     nome varchar(255)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Fornecedor_pk PRIMARY KEY  (ChaveFornecedor)
 );
 
@@ -69,7 +69,7 @@ CREATE TABLE Medicamento (
     nome varchar(255)  NOT NULL,
     preco numeric(5,2)  NOT NULL,
     data_inicio datetime  NOT NULL,
-    data_fim datetime  NOT NULL,
+    data_fim datetime,
     CONSTRAINT Medicamento_pk PRIMARY KEY  (ChaveMedicamento)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE Receita (
     ChaveCategoria uniqueidentifier  NOT NULL,
     ChaveMedicamento uniqueidentifier  NOT NULL,
     ChaveCliente uniqueidentifier  NOT NULL,
-    CONSTRAINT Receita_pk PRIMARY KEY  (ChavePedido,ChaveMedicamento)
+    CONSTRAINT Receita_pk PRIMARY KEY  (ChavePedido)
 );
 
 -- Table: Receita_detail

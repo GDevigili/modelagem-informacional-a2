@@ -94,17 +94,20 @@ FROM DBCFB.dbo.Pedido p;
 -- Receita --
 -------------
 
-INSERT INTO DWCFB.dbo.Receita
+
+INSERT INTO DWCFB.dbo.Receita_detail
 SELECT 
 	NEWID(),
+	ped.ID_pedido,
 	SUM(dw_m.preco * iem.quantidade) as 'Valor',
 	SUM(iem.quantidade) as 'UnidadesVendidas',
-	dw_f.ChaveFornecedor,
 	dw_e.ChaveEndereco,
+	dw_f.ChaveFornecedor,
 	dw_d.ChaveDia,
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
 	dw_c.ChaveCliente
+	
 FROM DBCFB.dbo.Pedido ped
 	-- Incluído em
 	JOIN DBCFB.dbo.incluido_em iem
@@ -150,6 +153,7 @@ GROUP BY
 INSERT INTO DWCFB.dbo.Receita_detail
 SELECT 
 	NEWID(),
+	ped.ID_pedido,
 	SUM(dw_m.preco * iem.quantidade) as 'Valor',
 	SUM(iem.quantidade) as 'UnidadesVendidas',
 	DATEPART(hour, GETDATE()) as 'Hora',
