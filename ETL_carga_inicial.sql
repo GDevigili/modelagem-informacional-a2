@@ -69,10 +69,23 @@ SELECT
 	e.bairro,
 	e.uf,
 	e.cidade,
-	NULL,
+	cast( sum(v.vac_dia) as float)/ cast(max(p.populacao) as float) as taxa,
 	GETDATE(),
 	NULL
-FROM DBCFB.dbo.Endereco e;
+FROM DBCFB.dbo.Endereco e
+LEFT JOIN DBCFB.dbo.Vacinados v
+	ON e.cidade = v.municipio
+LEFT JOIN DBCFB.dbo.Populacao as p
+	ON v.municipio = p.municipio
+GROUP BY 
+	e.ID_Endereco,
+	e.cep,
+	e.logradouro,
+	e.numero,
+	e.bairro,
+	e.uf,
+	e.cidade
+;
 
 
 ---------
