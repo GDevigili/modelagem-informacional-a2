@@ -44,14 +44,15 @@ EXEC sys.sp_cdc_enable_table
 @role_name = NULL,
 @supports_net_changes = 1;
 
+declare @S binary(10);
+declare @E binary(10);
+
 ---------------
 -- CATEGORIA --
 ---------------
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_categoria;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_categoria');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT * INTO DWCFB.dbo.staging_dbo_categoria FROM [cdc].[fn_cdc_get_net_changes_dbo_categoria]
@@ -69,16 +70,12 @@ SELECT
 	NULL as data_fim
 FROM DWCFB.dbo.staging_dbo_categoria cat;
 
-
-
 -------------
 -- CLIENTE --
 -------------
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_cliente;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_cliente');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -98,16 +95,12 @@ SELECT
 	NULL as data_fim
 FROM DWCFB.dbo.staging_dbo_cliente c;
 
-
-
 -----------------
 -- MEDICAMENTO --
 -----------------
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_medicamento;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_medicamento');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -136,8 +129,6 @@ FROM DWCFB.dbo.staging_dbo_medicamento m;
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_fornecedor;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_fornecedor');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -165,8 +156,6 @@ FROM DWCFB.dbo.staging_dbo_fornecedor f
 
 DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_endereco;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_endereco');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -200,8 +189,6 @@ FROM DWCFB.dbo.staging_dbo_endereco e
 
 DROP TABLE IF EXISTS DWCFB.dbo.Pedido;
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_pedido');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -228,8 +215,6 @@ FROM DWCFB.dbo.staging_dbo_pedido p
 -- Receita --
 -------------
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_pedido');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -293,8 +278,6 @@ GROUP BY
 -- Receita_detail --
 --------------------
 
-declare @S binary(10);
-declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_pedido');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
@@ -353,3 +336,11 @@ GROUP BY
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
 	dw_c.ChaveCliente
+
+DELETE FROM DBCFB.cdc.dbo_categoria_CT;
+DELETE FROM DBCFB.cdc.dbo_cliente_CT;
+DELETE FROM DBCFB.cdc.dbo_endereco_CT;
+DELETE FROM DBCFB.cdc.dbo_fornecedor_CT;
+DELETE FROM DBCFB.cdc.dbo_incluido_em_CT;
+DELETE FROM DBCFB.cdc.dbo_medicamento_CT;
+DELETE FROM DBCFB.cdc.dbo_pedido_CT;
