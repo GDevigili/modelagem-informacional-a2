@@ -1,4 +1,4 @@
-USE DWCFB
+USE DBCFB;
 
 ---------------
 -- CATEGORIA --
@@ -10,17 +10,17 @@ EXEC sys.sp_cdc_enable_table
 @role_name = NULL,
 @supports_net_changes = 1;
 
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_categoria;
+
 declare @S binary(10);
 declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_categoria');
 SET @E = sys.fn_cdc_get_max_lsn();
-SELECT *
-INTO DWCFB.dbo.staging_dbo_categoria
-FROM
-[cdc].[fn_cdc_get_net_changes_dbo_categoria]
+SELECT * INTO DWCFB.dbo.staging_dbo_categoria FROM [cdc].[fn_cdc_get_net_changes_dbo_categoria]
 (
 @S, @E, 'all'
 );
+
 
 INSERT INTO DWCFB.dbo.Categoria
 SELECT 
@@ -29,7 +29,7 @@ SELECT
 	cat.nome,
 	GETDATE() as data_inicio,
 	NULL as data_fim
-FROM DWCFB.dbo.staging_dbo_categoria cat
+FROM DWCFB.dbo.staging_dbo_categoria cat;
 
 
 
@@ -42,6 +42,8 @@ EXEC sys.sp_cdc_enable_table
 @source_name = N'cliente',
 @role_name = NULL,
 @supports_net_changes = 1;
+
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_cliente;
 
 declare @S binary(10);
 declare @E binary(10);
@@ -75,6 +77,8 @@ EXEC sys.sp_cdc_enable_table
 @source_name = N'medicamento',
 @role_name = NULL,
 @supports_net_changes = 1;
+
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_medicamento;
 
 declare @S binary(10);
 declare @E binary(10);
@@ -110,6 +114,8 @@ EXEC sys.sp_cdc_enable_table
 @role_name = NULL,
 @supports_net_changes = 1;
 
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_fornecedor;
+
 declare @S binary(10);
 declare @E binary(10);
 SET @S = sys.fn_cdc_get_min_lsn('dbo_fornecedor');
@@ -142,6 +148,8 @@ EXEC sys.sp_cdc_enable_table
 @source_name = N'endereco',
 @role_name = NULL,
 @supports_net_changes = 1;
+
+DROP TABLE IF EXISTS DWCFB.dbo.staging_dbo_endereco;
 
 declare @S binary(10);
 declare @E binary(10);
@@ -181,6 +189,8 @@ EXEC sys.sp_cdc_enable_table
 @source_name = N'dia',
 @role_name = NULL,
 @supports_net_changes = 1;
+
+DROP TABLE IF EXISTS DWCFB.dbo.Dia;
 
 declare @S binary(10);
 declare @E binary(10);
