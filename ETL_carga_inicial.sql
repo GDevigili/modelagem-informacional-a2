@@ -95,14 +95,14 @@ FROM DBCFB.dbo.Pedido p;
 -------------
 
 
-INSERT INTO DWCFB.dbo.Receita_detail
+INSERT INTO DWCFB.dbo.Receita
 SELECT 
 	NEWID(),
 	ped.ID_pedido,
 	SUM(dw_m.preco * iem.quantidade) as 'Valor',
 	SUM(iem.quantidade) as 'UnidadesVendidas',
-	dw_e.ChaveEndereco,
 	dw_f.ChaveFornecedor,
+	dw_e.ChaveEndereco,
 	dw_d.ChaveDia,
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
