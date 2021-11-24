@@ -24,7 +24,7 @@ SELECT
 	m.preco,
 	GETDATE() as data_inicio,
 	NULL as data_fim
-FROM DBCFB.dbo.Medicamento m
+FROM DBCFB.dbo.Medicamento m;
 
 
 ---------------
@@ -38,7 +38,7 @@ SELECT
 	cat.nome,
 	GETDATE() as data_inicio,
 	NULL as data_fim
-FROM DBCFB.dbo.Categoria cat
+FROM DBCFB.dbo.Categoria cat;
 
 
 ----------------
@@ -52,7 +52,7 @@ SELECT
 	f.nome,
 	GETDATE() as data_inicio,
 	NULL as data_fim
-FROM DBCFB.dbo.Fornecedor f
+FROM DBCFB.dbo.Fornecedor f;
 
 
 --------------
@@ -72,7 +72,7 @@ SELECT
 	NULL,
 	GETDATE(),
 	NULL
-FROM DBCFB.dbo.Endereco e
+FROM DBCFB.dbo.Endereco e;
 
 
 ---------
@@ -87,7 +87,7 @@ SELECT
 	DAY(p.data) as 'DiaMes',
 	MONTH(p.data) as 'Mes',
 	YEAR(p.data) as 'Ano'
-FROM DBCFB.dbo.Pedido p
+FROM DBCFB.dbo.Pedido p;
 
 
 -------------
@@ -140,7 +140,7 @@ GROUP BY
 	dw_d.ChaveDia,
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
-	dw_c.ChaveCliente
+	dw_c.ChaveCliente;
 
 
 --------------------
@@ -195,7 +195,7 @@ GROUP BY
 	dw_d.ChaveDia,
 	dw_cat.ChaveCategoria,
 	dw_m.ChaveMedicamento,
-	dw_c.ChaveCliente
+	dw_c.ChaveCliente;
 
 
 
