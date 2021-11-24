@@ -34,19 +34,13 @@ EXEC sys.sp_cdc_enable_table
 
 EXEC sys.sp_cdc_enable_table
 @source_schema = N'dbo',
-@source_name = N'dia',
-@role_name = NULL,
-@supports_net_changes = 1;
-
-EXEC sys.sp_cdc_enable_table
-@source_schema = N'dbo',
 @source_name = N'pedido',
 @role_name = NULL,
 @supports_net_changes = 1;
 
 EXEC sys.sp_cdc_enable_table
 @source_schema = N'dbo',
-@source_name = N'pedido',
+@source_name = N'incluido_em',
 @role_name = NULL,
 @supports_net_changes = 1;
 
@@ -204,21 +198,21 @@ FROM DWCFB.dbo.staging_dbo_endereco e
 -- Dia --
 ---------
 
-DROP TABLE IF EXISTS DWCFB.dbo.Dia;
+DROP TABLE IF EXISTS DWCFB.dbo.Pedido;
 
 declare @S binary(10);
 declare @E binary(10);
-SET @S = sys.fn_cdc_get_min_lsn('dbo_dia');
+SET @S = sys.fn_cdc_get_min_lsn('dbo_pedido');
 SET @E = sys.fn_cdc_get_max_lsn();
 SELECT *
-INTO DWCFB.dbo.staging_dbo_dia
+INTO DWCFB.dbo.staging_dbo_pedido
 FROM
-[cdc].[fn_cdc_get_net_changes_dbo_dia]
+[cdc].[fn_cdc_get_net_changes_dbo_pedido]
 (
 @S, @E, 'all'
 );
 
-INSERT INTO DWCFB.dbo.Dia
+INSERT INTO DWCFB.dbo.Pedido
 SELECT 
 	NEWID(), 
 	p.data,
@@ -226,7 +220,7 @@ SELECT
 	DAY(p.data) as 'DiaMes',
 	MONTH(p.data) as 'Mes',
 	YEAR(p.data) as 'Ano'
-FROM DWCFB.dbo.staging_dbo_dia p
+FROM DWCFB.dbo.staging_dbo_pedido p
 
 
 
